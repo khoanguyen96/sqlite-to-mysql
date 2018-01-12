@@ -8,7 +8,7 @@ class Partition:
 
     def read(self):
         for line in self.file:
-            table_regex = re.search('INSERT INTO (\w*) VALUES', line, re.IGNORECASE)
+            table_regex = re.search(r'INSERT INTO (\w*) VALUES', line, re.IGNORECASE)
 
             if table_regex:
                 name = table_regex.group(1).strip()
@@ -26,3 +26,7 @@ class Partition:
                 write_file.write(line)
 
             write_file.close()
+
+    def process(self):
+        self.read()
+        self.write()
