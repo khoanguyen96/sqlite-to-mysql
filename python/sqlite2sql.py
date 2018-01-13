@@ -1,10 +1,10 @@
-import fileinput, tempfile
+import tempfile
 from partition import Partition
 
 class Sqlite2Sql:
     def __init__(self, sqlite):
         self.source = sqlite
-        self.lines = []
+        self.lines = list()
 
     def replace_match_allcase(self, line, src, dest):
         line = line.replace(src, dest)
@@ -55,7 +55,8 @@ class Sqlite2Sql:
 
     def preprocess(self):
         for line in self.source:
-            self.lines.append(line.encode('string_escape'))
+            encoded_line = line.encode('string_escape')
+            self.lines.append(encoded_line)
 
     def parse(self):
         in_string = False
@@ -70,12 +71,11 @@ class Sqlite2Sql:
 
     def read(self):
         self.preprocess()
-
         lines = (l for l in self.parse())
+
         tempf = tempfile.TemporaryFile()
         for line in lines:
             tempf.write(line)
-        tempf.close()
 
         return tempf
 

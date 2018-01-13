@@ -3,10 +3,11 @@ import re, fileinput
 class Partition:
     def __init__(self, sqlFile, outDir):
         self.sections = dict()
-        self.file = fileinput.input(sqlFile)
+        self.file = sqlFile
         self.dir = outDir
 
     def read(self):
+        self.file.seek(0)
         for line in self.file:
             table_regex = re.search(r'INSERT INTO (\w*) VALUES', line, re.IGNORECASE)
 
@@ -17,6 +18,7 @@ class Partition:
                     self.sections[name] = list()
                     print name
                 self.sections[name].append(line)
+        self.file.close()
 
     def write(self):
         for key, values in self.sections.iteritems():
