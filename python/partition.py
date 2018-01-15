@@ -1,14 +1,13 @@
 import re, fileinput
 
 class Partition:
-    def __init__(self, sqlFile, outDir):
+    def __init__(self, srcGenerator, outDir):
         self.sections = dict()
-        self.file = sqlFile
+        self.generator = srcGenerator
         self.dir = outDir
 
     def read(self):
-        self.file.seek(0)
-        for line in self.file:
+        for line in self.generator:
             table_regex = re.search(r'INSERT INTO (\w*) VALUES', line, re.IGNORECASE)
 
             if table_regex:
@@ -16,9 +15,7 @@ class Partition:
 
                 if name not in self.sections:
                     self.sections[name] = list()
-                    print name
                 self.sections[name].append(line)
-        self.file.close()
 
     def write(self):
         for key, values in self.sections.iteritems():
