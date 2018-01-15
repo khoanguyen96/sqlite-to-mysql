@@ -55,9 +55,10 @@ class Sqlite2Sql:
         return line
 
     def preprocess(self):
-        for line in self.source:
-            encoded_line = line.encode('string_escape')
-            self.lines.append(encoded_line)
+        lines = (l for l in self.source)
+
+        for line in lines:
+            self.lines.append(line)
 
     def parse(self):
         in_string = False
