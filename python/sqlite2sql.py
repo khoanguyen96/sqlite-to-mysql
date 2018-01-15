@@ -1,4 +1,3 @@
-import tempfile
 from partition import Partition
 
 class Sqlite2Sql:
@@ -71,18 +70,9 @@ class Sqlite2Sql:
 
             yield line
 
-    def read(self):
-        self.preprocess()
-        lines = (l for l in self.parse())
-
-        tempf = tempfile.TemporaryFile()
-        for line in lines:
-            tempf.write(line)
-
-        return tempf
-
     def convert(self, out):
-        data = self.read()
+        self.preprocess()
+        data = self.parse()
 
         partitioner = Partition(data, out)
         partitioner.process()
