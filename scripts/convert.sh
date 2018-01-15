@@ -16,7 +16,7 @@ if [ ! -z "$db_sqlite" ]; then
 
   # convert data.sql to mysql format
   # partition to multiple .sql files
-  ./sqlite3_to_mysql.py data/data.sql data
+  ../sqlite3_to_mysql.py data/data.sql data
 
   # remove all the files
   # rm -f data/tmpschema.sql data/tmpdump.sql data/data.sql

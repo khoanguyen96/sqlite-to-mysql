@@ -1,18 +1,18 @@
 sqlite-to-mysql
 ===============
 
-Script to convert and add sqlite3 database into a mysql/mariadb database
+Script to convert and add SQLite3 database into a MySQL/MariaDB database
 
 ## Description
 
-This script is used to convert a sqlite3 .db file into a running mysql/mariadb 5.x+ instance.  It was adapted from the code posted at http://www.redmine.org/boards/2/topics/12793?r=24999 .  I've mostly simply altered it to make the effort of use minimal.
+This script is used to convert a SQLite3 .db file into a multiple SQL files based on their tablenames.  It was forked from [sqlite-to-mysql](https://github.com/vwbusguy/sqlite-to-mysql).  I've mostly rewrote the original using Python classes and added another class that handled
+multiple writing SQL files, as importing one huge SQL file can (if not mostly) fail.
 
-The script works as a layer between sqlite and mysql to format the sqlite dump, create a new user and database in mysql, and restore all the tables and data in one shell line.
 
 ## Dependencies
-Sqlite 3 `sqlite3`
 
-Python 2.7 `python`
+- Sqlite 3 `sqlite3`
+- Python 2.7 `python`
 
 ## Usage
 
@@ -22,6 +22,8 @@ Common Steps:
 1) Dump SQLite file schema and data into two files.
 2) Remove schema and retain only the data.
 3) Run Python script to convert into MySQL syntax.
+
+(Similar to `convert.sh`)
 
 ```bash
 # Dump SQLite schema
