@@ -12,7 +12,7 @@ class Sqlite2Sql:
 
         return line
 
-    def replace_backticks_except_in_string(self, line, in_string):
+    def replace_backticks_and_escape_except_in_string(self, line, in_string):
         new_line = ''
 
         for char in line:
@@ -24,8 +24,9 @@ class Sqlite2Sql:
                     continue
             elif char == "'":
                 in_string = False
+            new_line = new_line + char
 
-        return new_line, in_string
+        return new_line.encode('string_escape'), in_string
 
     def replace(self, line):
         IGNOREDPREFIXES = [
@@ -65,7 +66,7 @@ class Sqlite2Sql:
                 line = self.replace(line)
                 if line is None:
                     continue
-            line, in_string = self.replace_backticks_except_in_string(line, in_string)
+            line, in_string = self.replace_backticks_and_escape_except_in_string(line, in_string)
 
             yield line
 
