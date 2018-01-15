@@ -1,6 +1,8 @@
 #! /usr/bin/env python
 
-import argparse, os
+import argparse
+import os
+
 from sqlite2sql import Sqlite2Sql
 
 def perfect_directory(path):
